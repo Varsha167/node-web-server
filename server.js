@@ -2,27 +2,30 @@ const express = require('express')
 const hbs = require('hbs')
 const fs = require('fs')
 
+const port = process.env.PORT  || 3000
 var app = express()
+
+
 
 hbs.registerPartials(__dirname+'/views/partials')
 app.set('view engine', 'hbs')
 
 
 //Didn't use next. So everything stops here
-app.use((req,res,next)=>{
-  res.render('maintainance.hbs')
-})
+// app.use((req,res,next)=>{
+//   res.render('maintainance.hbs')
+// })
 
-app.use((req,res,next) => {
-  var now = new Date().toString()
-  var log = `${now} : ${req.method} ${req.url}`
-  console.log(log)
-  fs.appendFile('server.log', log + '\n', err)
-  if(err){
-    console.log("Error ...")
-  }
-  next()
-})
+// app.use((req,res,next) => {
+//   var now = new Date().toString()
+//   var log = `${now} : ${req.method} ${req.url}`
+//   console.log(log)
+//   fs.appendFile('server.log', log + '\n', err)
+//   if(err){
+//     console.log("Error ...")
+//   }
+//   next()
+// })
 
 //to access the help page
 app.use(express.static(__dirname+'/public'))
@@ -71,6 +74,6 @@ app.get('/bad', (req,res)=>{
 
 })
 
-app.listen(3000, (req,res)=>{
-  console.log("Listening ...")
+app.listen(port, (req,res)=>{
+  console.log(`Listening on port ${port}`)
 })
